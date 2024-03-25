@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 let isConnected = false;
 
@@ -6,21 +6,20 @@ export const connectToDB = async () => {
     mongoose.set('strictQuery', true);
 
     if (isConnected) {
-        console.log('MongoDB is already Connected!');
+        console.log('MongoDB is already connected!');
         return;
     }
 
     try {
         await mongoose.connect(process.env.MONGODB_URI, {
             dbName: 'promptopia',
-            useNewUriParser: true,
-            useUnifiedTopology: true,
-        })
+            // useNewUrlParser: true, // Correct option name
+            // useUnifiedTopology: true,
+        });
 
         isConnected = true;
-        console.log('MongoDB Cnnected!')
-
+        console.log('MongoDB connected!');
     } catch (error) {
-        console.log(error)
+        console.error('Error connecting to MongoDB:', error);
     }
-}
+};
